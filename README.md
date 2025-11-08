@@ -36,7 +36,7 @@ This repository mirrors the folders in the OpenFOAM installation and therefore c
 
 All customised libraries (solvers and utlities) need compiling with the OpenFOAM command _wmake_ this can also be achieved by cloning the git repo and running the command: _wmake -all_ in the cloned directory
  
-# Testing
+## Testing
 To test the all custom code has been compiled correctly navigate to a example case file (suggest: X) and run:
 
 ```blockMesh``` 
@@ -47,7 +47,7 @@ To test the all custom code has been compiled correctly navigate to a example ca
 
 
 
-# Mesh Generation
+## Mesh Generation
 To create the mesh for the simulation, copy the ```refineSetFields.sh``` script to the example case file and run it using: ```./refineSetFields.sh``` (note: execution privledges may need authorising).
 This script will create the inital mesh and set the initial droplet configuration on the generated mesh. 
 It is good practice to keep a 0.orig that reflects the state of the ```0``` folder before the ```refineSetFields```
@@ -56,7 +56,7 @@ After this the impact simulation can be started with:
 ```diffusiveInterFoam```
 
 
-# Static Diffusion
+## Static Diffusion
 In some cases (such as after the droplets have reached a static equilibrium) it is preferable for simulation speed to stop solving the momentum equations and only solve the diffusion equation with (or without) the residual velocity field. 
 This can be done with the ```staticDiffusiveInterFoam``` solver, which only solves the phase restricted diffusion equation over the simulation domain and not the equations of mass and momentum.
 
