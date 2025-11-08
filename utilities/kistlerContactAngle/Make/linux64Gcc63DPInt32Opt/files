@@ -1,0 +1,4 @@
+SOURCE += kistlerAlphaContactAngle/kistlerAlphaContactAngleFvPatchScalarField.C
+SOURCE += RiddersRoot/RiddersRoot.C
+
+LIB = $(FOAM_USER_LIBBIN)/libkistlerAlphaContactAngle

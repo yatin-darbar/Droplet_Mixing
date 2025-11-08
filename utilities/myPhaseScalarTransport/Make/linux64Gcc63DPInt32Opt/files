@@ -1,0 +1,3 @@
+SOURCE += myPhaseScalarTransport.C
+
+LIB = $(FOAM_USER_LIBBIN)/myPhaseScalarTransport
