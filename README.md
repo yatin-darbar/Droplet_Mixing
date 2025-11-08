@@ -69,9 +69,13 @@ In this instance then static diffusion of the added scalar takes play only.
 ## 📁 Repository Structure
 
 solvers/ → source code for custom solvers 
+
 utlities/  → source code for Kistler Model and custom function objects
+
 examples/ → example cases 
+
 data/ → Data from publication
+
 figures/ → Publication plots
 
 
