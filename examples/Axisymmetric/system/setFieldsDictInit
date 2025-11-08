@@ -1,0 +1,46 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  9
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      setFieldsDictInit;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+defaultFieldValues
+(
+    volScalarFieldValue alpha.drop 0
+);
+
+regions
+(
+    // Free Drop
+    boxToCell
+    {
+        box (0 7e-5 0) (0.51e-4 1.8e-4 0.51e-4);
+        fieldValues
+        (
+            volScalarFieldValue    alpha.drop  1
+        );
+    }
+
+    // Sessile Droplet
+    boxToCell
+    {
+        box (0 0 0) (0.85e-4 0.50e-4 0.85e-4);
+        fieldValues
+        (
+            volScalarFieldValue    alpha.drop  1
+        );
+    }
+
+);
+
+// ************************************************************************* //

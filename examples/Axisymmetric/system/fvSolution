@@ -1,0 +1,148 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  9
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      fvSolution;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+solvers
+{
+    "alpha.drop.*"
+    {
+        nAlphaCorr      1;		// loop over MULES step (in alphaEqn.H)
+        nAlphaSubCycles 1;		// subcycle to increase time step (removed)
+
+	MULESCORR	no; 		// specify semi-implicit MULES (removed)
+	nLimiterIter	1;		// Used in MULES limiter - defaults to 3 (?)
+
+	preconditioner	DIC;
+	solver 		PCG;
+    
+	tolerance	1e-09;
+	relTol		0;
+	minIter		50;
+	maxIter		1000;
+    }
+
+
+    "beta.*"
+    {
+        nBetaCorr       1;        // loop over MULES step (in betaEqn.H)
+        cBeta           1;        // compression factor
+
+        nLimiterIter    1;        // Used in MULES limiter - defaults to 3 (?)
+
+	preconditioner	DIC;
+	solver 		PCG;
+
+	tolerance	1e-9;
+	relTol		0;
+	minIter		50;
+	maxIter		1000;
+    }
+
+    "gamma.*"
+    {
+        preconditioner  DILU;
+        solver          PBiCGStab;
+
+        tolerance       1e-9;
+        relTol          0;
+        maxIter         1000;
+    }
+
+
+
+    p_rgh
+    {
+	smoother	GaussSeidel;
+        solver          GAMG;
+
+        tolerance       1e-07;
+        relTol          0;
+	minIter		2;
+	maxIter		1000;
+    }
+
+    p_rghFinal
+    {
+        $p_rgh;
+        tolerance       1e-08;
+    }
+
+    pcorr
+    {
+        smoother	GaussSeidel;
+	solver		GAMG;
+
+        tolerance       1e-08;
+	relTol		0;
+	minIter		2;
+	maxIter		1000;
+    }
+
+    pcorrFinal
+    {
+	$pcorr;
+    }
+
+    U
+    {
+	preconditioner 	DILU;
+	solver         	PBiCG;
+
+        tolerance       1e-10;
+	relTol		0;
+	minIter		5;
+	maxIter		25;
+    }
+
+    UFinal
+    {
+	$U
+    }
+
+    T
+    {
+        preconditioner  DILU;
+        solver          PBiCG;
+
+        tolerance       1e-10;
+        relTol          0;
+        minIter         5;
+        maxIter         1000;
+    }
+
+}
+
+PIMPLE
+{
+    momentumPredictor 		yes;		// Begin by solving the pressure equation
+    nOuterCorrectors		1;		// PIMPLE (loop over all eq) -. 1 means PISO
+    nCorrectors     		3;		// PISO (pressure eq and momentum corr)
+    nNonOrthogonalCorrectors 	1;		// Repeated Solution of pressure equation
+
+    pRefPoint      0;
+    pRefValue      0;
+
+    	
+}
+
+relaxationFactors
+{
+    equations
+    {
+        ".*" 1;
+    }
+}
+
+// ************************************************************************* //

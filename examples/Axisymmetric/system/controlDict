@@ -1,0 +1,102 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  9
+     \\/     M anipulation  |
+
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Solver Conditions
+
+application       TestInterFoam;
+
+startFrom         latestTime;		// latestTime (new); latestTime (continues)
+
+startTime         0;
+
+stopAt            endTime;
+
+endTime           200e-6;
+
+runTimeModifiable no;
+
+// Time Stepping
+
+deltaT            1e-9;			// 1e-9 (new); TS before write (restart)
+
+//forceDeltaT	  true;
+
+adjustTimeStep	  yes;
+
+maxDeltaT         0.2e-3;
+
+maxCo             0.15;
+maxAlphaCo        0.15;
+
+timeFormat	  general;
+
+timePrecision     9;
+
+
+// Write Settings
+
+purgeWrite        0;
+
+writeCompression  compressed;
+
+writeControl      adjustableRunTime;
+
+writeFormat       ascii;
+
+writeInterval     1.0e-6;
+
+writePrecision    7;
+
+// Dynamically linked so libraries
+
+libs ("libkistlerAlphaContactAngle.so");
+
+functions
+{
+    phaseScalarTransport1
+    {
+        type            myPhaseScalarTransport;
+        libs            ("myPhaseScalarTransport.so");
+
+        field           gamma.drop;
+        p               p_rgh;
+	D		1.0e-9;
+
+    }
+
+    mixingMetrics
+    {
+        type            myMixingMetrics;
+        libs            ("libmyMixingMetricsFunctionObject.so");
+
+        phase           drop;
+        scalarName      gamma;
+        Cinf            0.5;
+
+	L 		50.0e-6;
+	D		1.0e-9;
+
+        writeControl    timeStep; //writeTime;
+        writeInterval   1;
+
+    }
+
+    #includeFunc interfaceData 
+
+}
+
+// ************************************************************************* //

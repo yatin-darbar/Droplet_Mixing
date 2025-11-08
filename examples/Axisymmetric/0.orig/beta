@@ -1,0 +1,50 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  9
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      beta;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 0 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
+{
+
+    substrate
+    {
+        type            kistlerAlphaContactAngle;
+        thetaA          70;
+        theta0          63.2;
+        thetaR          45;
+        muKistler       muKistler;
+        sigmaKistler    sigmaKistler;
+        value           uniform 0;
+    }
+
+    "internal.*"
+    {
+        type            symmetryPlane;
+    }
+
+    "external.*"
+    {
+        type            inletOutlet;
+        inletValue      uniform 0;
+        value           uniform 0;
+    }
+
+}
+
+
+// ************************************************************************* //
