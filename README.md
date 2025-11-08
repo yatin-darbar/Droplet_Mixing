@@ -84,9 +84,9 @@ If you use or build upon this solver, please cite:
 ```
 @software{YatinDarbar_diffusiveInterFoam_2025,
   author = {Yatin Darbar},
-  title = {DiffusiveInterFoam Repository},
+  title = {Droplet Mixing -- GitHub Repository},
   year = {2025},
-  url = {https://github.com/yourusername/custom-solver}
+  url = {https://github.com/yatin-darbar/Droplet_Mixing}
 }
 ```
 I hope to change this to a publication citation soon!
